@@ -22,7 +22,7 @@ export default async function QuestionsPage() {
           action={
             <Link
               href={viewer ? "/questions/new" : "/login"}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="pond-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-medium"
             >
               <CirclePlus className="h-4 w-4" />
               질문 남기기
@@ -30,8 +30,9 @@ export default async function QuestionsPage() {
           }
         />
 
-        <SectionCard className="rounded-[2rem] p-6">
-          <h2 className="display-font text-xl font-semibold text-white">안내</h2>
+        <SectionCard className="rounded-[2.2rem] p-6">
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Guide</p>
+          <h2 className="display-font mt-2 text-xl font-semibold text-white">안내</h2>
           <div className="mt-4 space-y-3 text-sm leading-7 text-[var(--muted)]">
             <p>질문은 사유의 시작점이다. 답을 빠르게 유도하지 않는 질문이 잘 맞는다.</p>
             <p>출처는 직접 입력한다. 도서 API 같은 자동 연동은 아직 없다.</p>

@@ -4,14 +4,13 @@ import { useState } from "react";
 import {
   Background,
   Controls,
-  MiniMap,
   ReactFlow,
   type Edge,
   type Node,
 } from "@xyflow/react";
 import { MotionConfig, motion } from "framer-motion";
 import { type Question, type Thought } from "@/lib/types";
-import { formatDate, summarizeText } from "@/lib/utils";
+import { cn, formatDate, summarizeText } from "@/lib/utils";
 
 type PondFlowProps = {
   question: Question;
@@ -20,6 +19,54 @@ type PondFlowProps = {
 
 const LEVEL_X = 320;
 const LEVEL_Y = 180;
+
+function FlowQuestionNode({ question }: { question: Question }) {
+  return (
+    <div className="pond-node w-[18.75rem] rounded-[2rem] px-5 py-5 text-left shadow-[0_0_28px_rgba(194,204,216,0.08)]" data-active="true">
+      <div className="pond-ripple absolute left-5 top-5 h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(244,195,119,0.5)]" />
+      <div className="pt-10">
+        <p className="text-[10px] uppercase tracking-[0.26em] text-[var(--muted)]">Question</p>
+        <p className="display-font mt-3 text-[1.65rem] leading-tight text-[#d2c4b3]">{question.title}</p>
+        <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+          {summarizeText(question.description || "설명이 비어 있는 질문이다.", 88)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FlowThoughtNode({
+  thought,
+  selected,
+}: {
+  thought: Thought;
+  selected: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "pond-node w-[16.5rem] rounded-[1.7rem] px-4 py-4 text-left",
+        selected && "shadow-[0_0_36px_rgba(244,195,119,0.14)]",
+      )}
+      data-active={selected ? "true" : "false"}
+    >
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+          {thought.author.nickname}
+        </p>
+        <p className="text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
+          {formatDate(thought.createdAt)}
+        </p>
+      </div>
+      <p className="display-font text-[1.18rem] leading-snug text-[var(--foreground)]">
+        {thought.isDeleted ? "삭제된 사유입니다." : summarizeText(thought.content, 76)}
+      </p>
+      <div className="mt-4 border-t border-white/[0.06] pt-3 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+        {thought.parentThoughtId ? "파생 사유" : "1차 사유"}
+      </div>
+    </div>
+  );
+}
 
 export function PondFlow({ question, thoughts }: PondFlowProps) {
   const [selectedThoughtId, setSelectedThoughtId] = useState<string | null>(
@@ -31,15 +78,7 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
       id: `question:${question.id}`,
       position: { x: 80, y: Math.max(40, thoughts.length * 26) },
       data: {
-        label: (
-          <div className="max-w-[280px] space-y-2 rounded-[28px] border border-[rgba(255,203,121,0.2)] bg-[rgba(8,18,30,0.88)] px-5 py-4 text-left shadow-[0_0_40px_rgba(255,203,121,0.12)]">
-            <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Question</p>
-            <p className="display-font text-lg font-semibold text-white">{question.title}</p>
-            <p className="text-xs leading-6 text-[var(--muted)]">
-              {summarizeText(question.description || "설명이 비어 있는 질문이다.", 80)}
-            </p>
-          </div>
-        ),
+        label: <FlowQuestionNode question={question} />,
       },
       draggable: false,
       selectable: false,
@@ -78,23 +117,7 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
         id: thought.id,
         position: { x: LEVEL_X * depth, y },
         data: {
-          label: (
-            <div
-              className={`max-w-[250px] rounded-[24px] border px-4 py-3 text-left ${
-                selectedThoughtId === thought.id
-                  ? "border-[rgba(255,203,121,0.5)] bg-[rgba(18,28,41,0.94)] shadow-[0_0_32px_rgba(255,203,121,0.16)]"
-                  : "border-white/10 bg-[rgba(11,20,30,0.92)]"
-              }`}
-            >
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <p className="text-xs text-white">{thought.author.nickname}</p>
-                <p className="text-[11px] text-[var(--muted)]">{formatDate(thought.createdAt)}</p>
-              </div>
-              <p className="text-sm leading-6 text-[var(--foreground)]">
-                {thought.isDeleted ? "삭제된 사유입니다." : summarizeText(thought.content, 88)}
-              </p>
-            </div>
-          ),
+          label: <FlowThoughtNode thought={thought} selected={selectedThoughtId === thought.id} />,
         },
         draggable: false,
         style: {
@@ -129,13 +152,21 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
   return (
     <MotionConfig transition={{ duration: 0.42, ease: "easeOut" }}>
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="glass-card pond-ring h-[620px] overflow-hidden rounded-[2rem] border border-white/10">
+        <div className="glass-card pond-ring relative h-[620px] overflow-hidden rounded-[2.2rem] border border-white/10">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(217,228,239,0.12),_transparent_62%)] blur-[80px]" />
+            <div className="absolute left-[12%] top-[18%] h-72 w-72 rounded-full border border-[rgba(194,204,216,0.08)]" />
+            <div className="absolute right-[10%] bottom-[14%] h-80 w-80 rounded-full border border-[rgba(244,195,119,0.08)]" />
+          </div>
           <ReactFlow
             nodes={nodes}
             edges={edges}
             fitView
             minZoom={0.4}
             maxZoom={1.5}
+            nodesDraggable={false}
+            nodesConnectable={false}
+            elementsSelectable
             onNodeClick={(_, node) => {
               if (node.id.startsWith("question:")) {
                 return;
@@ -144,21 +175,10 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
               setSelectedThoughtId(node.id);
             }}
           >
-            <Background color="rgba(255,255,255,0.08)" gap={28} />
-            <MiniMap
-              pannable
-              zoomable
-              style={{
-                background: "rgba(4, 9, 15, 0.92)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-              nodeColor={(node) =>
-                node.id.startsWith("question:") ? "rgba(255,203,121,0.9)" : "rgba(237,243,249,0.55)"
-              }
-            />
+            <Background color="rgba(217,228,239,0.06)" gap={34} />
             <Controls
               position="bottom-left"
-              className="!rounded-2xl !border !border-white/10 !bg-[rgba(6,12,20,0.75)] !text-white"
+              className="!rounded-2xl !border !border-white/10 !bg-[rgba(6,12,20,0.75)] !text-white [&_button]:!border-white/10 [&_button]:!bg-transparent [&_button:hover]:!bg-white/5"
             />
           </ReactFlow>
         </div>
@@ -167,14 +187,14 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
           key={selectedThoughtId ?? "empty"}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card rounded-[2rem] p-6"
+          className="glass-card rounded-[2.2rem] p-6"
         >
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Selected Thought</p>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Selected Thought</p>
           {selectedThought ? (
             <div className="mt-4 space-y-4">
               <div>
-                <p className="text-sm text-white">{selectedThought.author.nickname}</p>
-                <p className="mt-1 text-xs text-[var(--muted)]">
+                <p className="display-font text-2xl text-[#d2c4b3]">{selectedThought.author.nickname}</p>
+                <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
                   {formatDate(selectedThought.updatedAt)}
                 </p>
               </div>
@@ -182,23 +202,23 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
                 {selectedThought.isDeleted ? "삭제된 사유입니다." : selectedThought.content}
               </p>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">파생 수</p>
+                <div className="pond-note rounded-[1.6rem] p-4">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">파생 수</p>
                   <p className="mt-2 text-white">{selectedChildren.length}</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">상태</p>
+                <div className="pond-note rounded-[1.6rem] p-4">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">상태</p>
                   <p className="mt-2 text-white">
                     {selectedThought.parentThoughtId ? "파생 사유" : "1차 사유"}
                   </p>
                 </div>
               </div>
-              <p className="rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-sm leading-7 text-[var(--muted)]">
+              <p className="pond-note rounded-[1.6rem] px-4 py-3 text-sm leading-7 text-[var(--muted)]">
                 실제 작성과 수정은 아래 읽기형 트리 영역에서 이어서 할 수 있다.
               </p>
             </div>
           ) : (
-            <p className="mt-4 rounded-2xl border border-dashed border-white/10 px-4 py-5 text-sm leading-7 text-[var(--muted)]">
+            <p className="mt-4 rounded-[1.6rem] border border-dashed border-white/10 px-4 py-5 text-sm leading-7 text-[var(--muted)]">
               노드를 누르면 사유 상세가 여기 열린다.
             </p>
           )}

@@ -38,7 +38,8 @@ export function ThoughtForm({
         ) : null}
 
         <div>
-          <h3 className={`display-font font-semibold text-white ${compact ? "text-xl" : "text-2xl"}`}>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Thought</p>
+          <h3 className={`display-font mt-2 font-semibold text-white ${compact ? "text-xl" : "text-2xl"}`}>
             {title}
           </h3>
           {description ? (
@@ -52,19 +53,19 @@ export function ThoughtForm({
             rows={compact ? 4 : 6}
             required
             defaultValue={initialContent ?? ""}
-            className="w-full rounded-2xl border border-white/10 bg-black/15 px-4 py-3 text-sm leading-7 text-white outline-none placeholder:text-white/25 focus:border-[var(--accent)]"
+            className="pond-textarea text-sm leading-7"
             placeholder="생각의 조각을 그대로 남겨도 된다."
           />
         </fieldset>
 
         {disabledReason ? (
-          <p className="rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-sm text-[var(--muted)]">
+          <p className="pond-note rounded-[1.5rem] px-4 py-3 text-sm text-[var(--muted)]">
             {disabledReason}
           </p>
         ) : null}
 
         <SubmitButton
-          className="rounded-full bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[#1b1408]"
+          className="pond-button rounded-full px-4 py-2.5 text-[11px] font-medium"
           pendingLabel="저장 중..."
           disabled={disabled}
         >

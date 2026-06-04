@@ -107,6 +107,12 @@ select {
     inset 0 0 0 1px rgba(244, 195, 119, 0.08);
 }
 
+.pond-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+  box-shadow: none;
+}
+
 .pond-node {
   position: relative;
   border: 1px solid rgba(210, 196, 179, 0.12);
@@ -169,6 +175,50 @@ select {
 .pond-ripple::after {
   inset: -46px;
   border-color: rgba(244, 195, 119, 0.08);
+}
+
+.pond-field {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pond-input,
+.pond-textarea,
+.pond-select {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(142, 155, 171, 0.34);
+  background: transparent;
+  padding: 0.9rem 0.15rem 0.8rem;
+  color: var(--foreground);
+  outline: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.pond-input::placeholder,
+.pond-textarea::placeholder {
+  color: rgba(142, 155, 171, 0.45);
+}
+
+.pond-input:focus,
+.pond-textarea:focus,
+.pond-select:focus {
+  border-color: rgba(244, 195, 119, 0.66);
+  box-shadow: 0 1px 0 0 rgba(244, 195, 119, 0.3);
+}
+
+.pond-select option {
+  background: #0b1724;
+  color: var(--foreground);
+}
+
+.pond-note {
+  border: 1px solid rgba(210, 196, 179, 0.1);
+  background: rgba(10, 20, 29, 0.18);
 }
 
 @keyframes pond-float {

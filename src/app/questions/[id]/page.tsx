@@ -37,19 +37,19 @@ export default async function QuestionDetailPage({
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-5 py-10 sm:px-8 lg:px-10">
       <section className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
-        <SectionCard className="rounded-[2rem] p-6">
+        <SectionCard className="rounded-[2.2rem] p-6">
           <div className="space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">
                   Question
                 </p>
-                <h1 className="display-font mt-2 text-3xl leading-tight font-semibold text-white">
+                <h1 className="display-font mt-2 text-3xl leading-tight font-semibold text-[#d2c4b3]">
                   {question.title}
                 </h1>
               </div>
               {demoMode ? (
-                <span className="rounded-full border border-[var(--accent-soft)] bg-[var(--accent-soft)] px-3 py-1 text-xs text-[var(--accent)]">
+                <span className="rounded-full border border-[var(--accent-soft)] px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
                   demo
                 </span>
               ) : null}
@@ -60,23 +60,21 @@ export default async function QuestionDetailPage({
             </p>
 
             <div className="grid gap-3 text-sm text-[var(--muted)]">
-              <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">작성자</p>
+              <div className="pond-note rounded-[1.6rem] p-4">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">작성자</p>
                 <p className="mt-2 text-white">{question.author.nickname}</p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">출처</p>
+              <div className="pond-note rounded-[1.6rem] p-4">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">출처</p>
                 <p className="mt-2 text-white">
-                  {question.sourceTitle
-                    ? `${question.sourceType} · ${question.sourceTitle}`
-                    : question.sourceType}
+                  {question.sourceTitle ? `${question.sourceType} · ${question.sourceTitle}` : question.sourceType}
                 </p>
                 {question.sourceAuthor ? (
                   <p className="mt-1 text-xs text-[var(--muted)]">{question.sourceAuthor}</p>
                 ) : null}
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/10 p-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">기록</p>
+              <div className="pond-note rounded-[1.6rem] p-4">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">기록</p>
                 <p className="mt-2 text-white">{formatDate(question.createdAt)}</p>
               </div>
             </div>
@@ -84,7 +82,7 @@ export default async function QuestionDetailPage({
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/questions"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white"
+                className="pond-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-medium"
               >
                 <BookOpenText className="h-4 w-4" />
                 목록으로
@@ -92,7 +90,7 @@ export default async function QuestionDetailPage({
               {canEditQuestion ? (
                 <Link
                   href={`/questions/${question.id}/edit`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  className="pond-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-medium"
                 >
                   <PenLine className="h-4 w-4" />
                   질문 수정
@@ -105,7 +103,7 @@ export default async function QuestionDetailPage({
                 <input type="hidden" name="questionId" value={question.id} />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:rgba(255,152,152,0.25)] bg-[color:rgba(255,152,152,0.08)] px-4 py-2 text-sm text-[var(--danger)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:rgba(255,152,152,0.2)] px-4 py-2 text-[11px] uppercase tracking-[0.16em] text-[var(--danger)]"
                 >
                   <Trash2 className="h-4 w-4" />
                   질문 숨기기
@@ -135,7 +133,7 @@ export default async function QuestionDetailPage({
       </section>
 
       <details className="md:hidden">
-        <summary className="cursor-pointer rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+        <summary className="pond-button cursor-pointer rounded-full px-4 py-3 text-[11px] font-medium">
           React Flow 구조형 보기 열기
         </summary>
         <div className="pt-4">

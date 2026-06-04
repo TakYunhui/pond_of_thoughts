@@ -12,8 +12,11 @@ export function TopNav({ viewer, demoMode }: TopNavProps) {
     <header className="sticky top-0 z-20">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-6 sm:px-8 lg:px-10">
         <div className="flex items-center gap-5">
-          <Link href="/" className="display-font text-[1.7rem] font-medium text-[var(--accent)] sm:text-[2rem]">
-            질문의 연못
+          <Link
+            href="/"
+            className="display-font text-[1.7rem] font-medium text-[var(--accent)] sm:text-[2rem]"
+          >
+            사유의 연못
           </Link>
           <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.24em] text-[var(--muted)] md:flex">
             <Link href="/questions" className="hover:text-[var(--accent)]">

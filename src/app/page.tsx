@@ -24,7 +24,7 @@ export default async function Home() {
 
   return (
     <main className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pb-16 pt-6 sm:px-8 lg:px-10">
-      <section className="pond-landing relative px-2 pb-10 sm:px-4 lg:min-h-[58rem]">
+      <section className="pond-landing relative min-h-[calc(100svh-7rem)] px-2 pb-10 sm:px-4">
         <PondBackdrop />
 
         <div className="absolute inset-0 z-0 hidden lg:block">

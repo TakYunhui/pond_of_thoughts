@@ -276,6 +276,20 @@ select {
   transform: translateY(-50%) translateX(0) scale(1);
 }
 
+.pond-hero-copy {
+  transition:
+    filter 360ms ease,
+    opacity 360ms ease,
+    transform 360ms ease;
+}
+
+.pond-landing:has(.pond-question-anchor:hover) .pond-hero-copy,
+.pond-landing:has(.pond-question-anchor:focus-visible) .pond-hero-copy {
+  filter: blur(8px) saturate(0.88);
+  opacity: 0.34;
+  transform: scale(0.992);
+}
+
 .text-rise {
   opacity: 0;
   transform: translateY(14px);

@@ -230,6 +230,52 @@ select {
   background: rgba(10, 20, 29, 0.18);
 }
 
+.pond-question-anchor {
+  overflow: visible;
+}
+
+.pond-point {
+  box-shadow:
+    0 0 0 7px rgba(244, 195, 119, 0.05),
+    0 0 22px rgba(244, 195, 119, 0.22);
+}
+
+.pond-ripple-burst {
+  opacity: 0;
+  box-shadow: 0 0 0 1px rgba(217, 228, 239, 0.16);
+  transform: translate(-50%, -50%) scale(0.28);
+}
+
+.pond-ripple-burst-delay-1 {
+  box-shadow: 0 0 0 1px rgba(210, 196, 179, 0.12);
+}
+
+.pond-ripple-burst-delay-2 {
+  box-shadow: 0 0 0 1px rgba(244, 195, 119, 0.08);
+}
+
+.pond-type-art {
+  opacity: 0;
+  transform: translateY(-50%) translateX(0) scale(0.985);
+  transform-origin: center;
+  transition:
+    opacity 240ms ease,
+    transform 420ms ease;
+}
+
+.pond-type-art p:first-of-type {
+  text-shadow:
+    0 0 18px rgba(217, 228, 239, 0.1),
+    0 0 44px rgba(244, 195, 119, 0.04);
+}
+
+.pond-question-anchor:hover .pond-type-art,
+.pond-question-anchor:focus-visible .pond-type-art,
+.pond-question-anchor[data-active="true"] .pond-type-art {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0) scale(1);
+}
+
 .text-rise {
   opacity: 0;
   transform: translateY(14px);
@@ -285,12 +331,44 @@ select {
   }
 }
 
+@keyframes ripple-expand {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.28);
+  }
+  18% {
+    opacity: 0.56;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.7);
+  }
+}
+
 .float-drift {
   animation: pond-float 13s ease-in-out infinite;
 }
 
 .ripple-pulse {
   animation: ripple-pulse 8s ease-in-out infinite;
+}
+
+.pond-question-anchor:hover .pond-ripple-burst,
+.pond-question-anchor:focus-visible .pond-ripple-burst,
+.pond-question-anchor[data-active="true"] .pond-ripple-burst {
+  animation: ripple-expand 1.8s ease-out infinite;
+}
+
+.pond-question-anchor:hover .pond-ripple-burst-delay-1,
+.pond-question-anchor:focus-visible .pond-ripple-burst-delay-1,
+.pond-question-anchor[data-active="true"] .pond-ripple-burst-delay-1 {
+  animation-delay: 0.28s;
+}
+
+.pond-question-anchor:hover .pond-ripple-burst-delay-2,
+.pond-question-anchor:focus-visible .pond-ripple-burst-delay-2,
+.pond-question-anchor[data-active="true"] .pond-ripple-burst-delay-2 {
+  animation-delay: 0.56s;
 }
 
 .hide-scrollbar {
@@ -308,6 +386,7 @@ select {
 
   .float-drift,
   .ripple-pulse,
+  .pond-ripple-burst,
   .pond-node::before,
   .pond-node::after {
     animation: none !important;

@@ -4,10 +4,19 @@ import { FloatingQuestionNode } from "@/components/floating-question-node";
 import { PondBackdrop } from "@/components/pond-backdrop";
 import { getCurrentViewer, getQuestions, isDemoMode } from "@/lib/data";
 
-const desktopPositions = [
-  "left-[9%] top-[34%] float-drift",
-  "right-[12%] top-[42%] float-drift [animation-delay:1.8s]",
-  "left-[18%] top-[61%] float-drift [animation-delay:3.6s]",
+const desktopNodes = [
+  {
+    className: "left-[10%] top-[37%] float-drift",
+    textSide: "right" as const,
+  },
+  {
+    className: "right-[16%] top-[44%] float-drift [animation-delay:1.8s]",
+    textSide: "left" as const,
+  },
+  {
+    className: "left-[20%] top-[68%] float-drift [animation-delay:3.6s]",
+    textSide: "right" as const,
+  },
 ] as const;
 
 export default async function Home() {
@@ -27,8 +36,9 @@ export default async function Home() {
             <FloatingQuestionNode
               key={question.id}
               question={question}
-              className={desktopPositions[index] ?? desktopPositions[0]}
+              className={desktopNodes[index]?.className ?? desktopNodes[0].className}
               delayMs={index * 180}
+              textSide={desktopNodes[index]?.textSide ?? "right"}
               active={false}
             />
           ))}
@@ -48,7 +58,7 @@ export default async function Home() {
             건드리면 질문이 떠오르고, 클릭하면 더 깊은 사유의 흐름으로 들어간다.
           </p>
           <p className="mt-4 hidden text-[11px] uppercase tracking-[0.28em] text-[rgba(217,228,239,0.42)] lg:block">
-            수면 위의 점을 건드리면 질문이 떠오른다
+            점 위에 머물면 물결과 함께 질문이 떠오른다
           </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
             <Link

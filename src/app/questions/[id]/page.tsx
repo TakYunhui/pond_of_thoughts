@@ -42,7 +42,7 @@ export default async function QuestionDetailPage({
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">
-                  Question
+                  물음
                 </p>
                 <h1 className="display-font mt-2 text-3xl leading-tight font-semibold text-[#d2c4b3]">
                   {question.title}
@@ -56,25 +56,27 @@ export default async function QuestionDetailPage({
             </div>
 
             <p className="text-sm leading-7 text-[var(--muted)]">
-              {question.description || "설명은 비워 둔 질문이다."}
+              {question.description || "설명은 비워 둔 물음이다."}
             </p>
 
             <div className="grid gap-3 text-sm text-[var(--muted)]">
               <div className="pond-note rounded-[1.6rem] p-4">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">작성자</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">남긴 이</p>
                 <p className="mt-2 text-white">{question.author.nickname}</p>
               </div>
               <div className="pond-note rounded-[1.6rem] p-4">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">출처</p>
                 <p className="mt-2 text-white">
-                  {question.sourceTitle ? `${question.sourceType} · ${question.sourceTitle}` : question.sourceType}
+                  {question.sourceTitle
+                    ? `${question.sourceType} · ${question.sourceTitle}`
+                    : question.sourceType}
                 </p>
                 {question.sourceAuthor ? (
                   <p className="mt-1 text-xs text-[var(--muted)]">{question.sourceAuthor}</p>
                 ) : null}
               </div>
               <div className="pond-note rounded-[1.6rem] p-4">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">기록</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">남긴 날</p>
                 <p className="mt-2 text-white">{formatDate(question.createdAt)}</p>
               </div>
             </div>
@@ -85,7 +87,7 @@ export default async function QuestionDetailPage({
                 className="pond-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-medium"
               >
                 <BookOpenText className="h-4 w-4" />
-                목록으로
+                물음들로
               </Link>
               {canEditQuestion ? (
                 <Link
@@ -93,7 +95,7 @@ export default async function QuestionDetailPage({
                   className="pond-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-medium"
                 >
                   <PenLine className="h-4 w-4" />
-                  질문 수정
+                  물음 다듬기
                 </Link>
               ) : null}
             </div>
@@ -106,7 +108,7 @@ export default async function QuestionDetailPage({
                   className="inline-flex items-center gap-2 rounded-full border border-[color:rgba(255,152,152,0.2)] px-4 py-2 text-[11px] uppercase tracking-[0.16em] text-[var(--danger)]"
                 >
                   <Trash2 className="h-4 w-4" />
-                  질문 숨기기
+                  물음 감추기
                 </button>
               </form>
             ) : null}
@@ -123,7 +125,7 @@ export default async function QuestionDetailPage({
               ? "데모 모드에서는 실제 저장이 막혀 있다."
               : "로그인 후에 사유를 남길 수 있다."
           }
-          title="질문에서 바로 사유 시작하기"
+          title="물음에서 바로 사유 시작하기"
           description="완성된 글일 필요는 없다. 짧은 메모여도 된다."
         />
       </section>
@@ -134,7 +136,7 @@ export default async function QuestionDetailPage({
 
       <details className="md:hidden">
         <summary className="pond-button cursor-pointer rounded-full px-4 py-3 text-[11px] font-medium">
-          React Flow 구조형 보기 열기
+          흐름으로 보기 열기
         </summary>
         <div className="pt-4">
           <PondFlow question={question} thoughts={thoughts} />

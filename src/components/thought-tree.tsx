@@ -44,7 +44,7 @@ function ThoughtBranchCard({
             <p className="mt-1 text-xs text-[var(--muted)]">{formatDate(branch.updatedAt)}</p>
           </div>
           <span className="rounded-full border border-white/10 px-2.5 py-1 text-[11px] text-[var(--muted)]">
-            {branch.children.length} branches
+            {branch.children.length} 갈래
           </span>
         </div>
 
@@ -54,17 +54,17 @@ function ThoughtBranchCard({
 
         <div className="mt-4 grid gap-3">
           <details className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <summary className="cursor-pointer text-sm text-white">이 사유에서 이어쓰기</summary>
+            <summary className="cursor-pointer text-sm text-white">이 사유에 잇기</summary>
             <div className="pt-4">
               <ThoughtForm
                 action={createThoughtAction}
-                submitLabel="이어쓰기 저장"
+                submitLabel="이어 두기"
                 questionId={questionId}
                 parentThoughtId={branch.id}
                 compact
                 disabled={!canReply}
                 disabledReason={
-                  demoMode ? "데모 모드에서는 저장이 막혀 있다." : "로그인 후에 이어 쓸 수 있다."
+                  demoMode ? "데모 모드에서는 저장이 막혀 있다." : "로그인 후에 이어 적을 수 있다."
                 }
               />
             </div>
@@ -72,11 +72,11 @@ function ThoughtBranchCard({
 
           {canEdit ? (
             <details className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <summary className="cursor-pointer text-sm text-white">사유 수정 / 숨기기</summary>
-              <div className="pt-4 space-y-4">
+              <summary className="cursor-pointer text-sm text-white">사유 고치기 / 숨기기</summary>
+              <div className="space-y-4 pt-4">
                 <ThoughtForm
                   action={updateThoughtAction}
-                  submitLabel="수정 저장"
+                  submitLabel="고쳐 두기"
                   questionId={questionId}
                   thoughtId={branch.id}
                   initialContent={branch.content}
@@ -127,9 +127,9 @@ export function ThoughtTree({
   return (
     <SectionCard className="rounded-[2rem] p-6">
       <div className="mb-5">
-        <h2 className="display-font text-2xl font-semibold text-white">읽기형 트리</h2>
+        <h2 className="display-font text-2xl font-semibold text-white">結, 서로를 잇다</h2>
         <p className="mt-1 text-sm text-[var(--muted)]">
-          모바일에서 먼저 읽히는 구조다. 작성, 수정, 파생 작성도 여기서 처리한다.
+          모바일에서 먼저 읽히는 흐름이다. 적고, 고치고, 이어 쓰는 일도 여기서 한다.
         </p>
       </div>
 
@@ -147,7 +147,7 @@ export function ThoughtTree({
         </ol>
       ) : (
         <p className="rounded-[1.5rem] border border-dashed border-white/10 px-4 py-6 text-sm text-[var(--muted)]">
-          아직 남은 사유가 없다. 첫 사유를 남겨서 흐름을 시작해라.
+          아직 남은 사유가 없다. 첫 사유를 남겨 흐름을 열어보자.
         </p>
       )}
     </SectionCard>

@@ -19,12 +19,12 @@ function FlowQuestionNode({ question }: { question: Question }) {
     <div className="pond-node relative w-[19rem] rounded-[2.2rem] px-6 py-6 text-left shadow-[0_0_28px_rgba(194,204,216,0.06)]" data-active="true">
       <div className="pond-ripple absolute left-5 top-5 h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(244,195,119,0.5)]" />
       <div className="pt-10">
-        <p className="text-[10px] uppercase tracking-[0.26em] text-[var(--muted)]">질문</p>
+        <p className="text-[10px] uppercase tracking-[0.26em] text-[var(--muted)]">물음</p>
         <p className="display-font mt-3 text-[1.7rem] leading-tight text-[#d2c4b3]">
           {question.title}
         </p>
         <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
-          {summarizeText(question.description || "설명이 비어 있는 질문이다.", 88)}
+          {summarizeText(question.description || "설명이 비어 있는 물음이다.", 88)}
         </p>
       </div>
     </div>
@@ -58,7 +58,7 @@ function FlowThoughtNode({
         {thought.isDeleted ? "삭제된 사유입니다." : summarizeText(thought.content, 76)}
       </p>
       <div className="mt-4 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
-        {thought.parentThoughtId ? "파생 사유" : "첫 사유"}
+        {thought.parentThoughtId ? "이어짐" : "첫 사유"}
       </div>
     </div>
   );
@@ -200,18 +200,18 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
               </p>
               <div className="grid gap-3">
                 <div className="pond-note rounded-[1.8rem] p-4">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">파생 수</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">이어짐 수</p>
                   <p className="mt-2 text-white">{selectedChildren.length}</p>
                 </div>
                 <div className="pond-note rounded-[1.8rem] p-4">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">상태</p>
                   <p className="mt-2 text-white">
-                    {selectedThought.parentThoughtId ? "파생 사유" : "첫 사유"}
+                    {selectedThought.parentThoughtId ? "이어짐" : "첫 사유"}
                   </p>
                 </div>
               </div>
               <p className="pond-note rounded-[1.8rem] px-4 py-3 text-sm leading-7 text-[var(--muted)]">
-                실제 작성과 수정은 아래 읽기형 트리 영역에서 이어서 할 수 있다.
+                실제 작성과 수정은 아래 結, 서로를 잇다에서 이어갈 수 있다.
               </p>
             </div>
           ) : (

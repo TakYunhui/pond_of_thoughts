@@ -20,7 +20,7 @@ export function TopNav({ viewer, demoMode }: TopNavProps) {
           </Link>
           <nav className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.24em] text-[var(--muted)] md:flex">
             <Link href="/questions" className="hover:text-[var(--accent)]">
-              질문
+              물음
             </Link>
             <Link href="/me" className="hover:text-[var(--accent)]">
               내 기록

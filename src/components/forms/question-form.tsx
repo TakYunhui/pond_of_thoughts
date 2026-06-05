@@ -27,24 +27,24 @@ export function QuestionForm({
         {hiddenQuestionId ? <input type="hidden" name="questionId" value={hiddenQuestionId} /> : null}
         <fieldset disabled={disabled} className="space-y-5 disabled:opacity-60">
           <label className="block space-y-2">
-            <span className="pond-field">질문 제목</span>
+            <span className="pond-field">물음 제목</span>
             <input
               name="title"
               required
               defaultValue={initialQuestion?.title}
               className="pond-input text-base"
-              placeholder="좋은 삶이란 무엇인가?"
+              placeholder="좋은 삶이란 무엇일까?"
             />
           </label>
 
           <label className="block space-y-2">
-            <span className="pond-field">질문 설명</span>
+            <span className="pond-field">물음 설명</span>
             <textarea
               name="description"
               rows={5}
               defaultValue={initialQuestion?.description ?? ""}
               className="pond-textarea text-sm leading-7"
-              placeholder="왜 이 질문을 붙잡게 되었는지 짧게 남겨도 된다."
+              placeholder="왜 이 물음에 오래 머물게 되었는지 짧게 적어도 된다."
             />
           </label>
 
@@ -111,7 +111,7 @@ export function QuestionForm({
 
         <SubmitButton
           className="pond-button rounded-full px-5 py-3 text-[11px] font-medium"
-          pendingLabel="저장 중..."
+          pendingLabel="적는 중..."
           disabled={disabled}
         >
           {submitLabel}

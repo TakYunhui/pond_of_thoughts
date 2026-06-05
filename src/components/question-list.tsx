@@ -23,7 +23,7 @@ export function QuestionList({
     <SectionCard className="rounded-[2.2rem] p-6 sm:p-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Question Archive</p>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">물음의 결</p>
           <h2 className="display-font mt-2 text-2xl font-semibold text-white">{title}</h2>
           <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{description}</p>
         </div>
@@ -48,7 +48,7 @@ export function QuestionList({
                   {question.title}
                 </p>
                 <p className="max-w-2xl text-sm leading-7 text-[var(--muted)]">
-                  {summarizeText(question.description || "설명이 비어 있는 질문이다.", 140)}
+                  {summarizeText(question.description || "설명이 비어 있는 물음이다.", 140)}
                 </p>
               </div>
               <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-[var(--muted)] group-hover:text-[var(--accent)]" />

@@ -33,7 +33,7 @@ export function FloatingQuestionNode({
             {question.title}
           </p>
           <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
-            {summarizeText(question.description || "설명이 비어 있는 질문이다.", 92)}
+            {summarizeText(question.description || "설명이 비어 있는 물음이다.", 92)}
           </p>
           <div className="mt-5 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
             <div className="flex flex-col gap-1">
@@ -69,13 +69,13 @@ export function FloatingQuestionNode({
         )}
       >
         <span className="text-[10px] uppercase tracking-[0.26em] text-[rgba(217,228,239,0.44)]">
-          질문
+          물음
         </span>
         <p className="display-font mt-2 max-w-[15rem] text-[2.18rem] leading-[1.04] tracking-[-0.06em] text-[#dccfbe] break-keep [word-break:keep-all]">
           {question.title}
         </p>
         <p className="mt-3 max-w-[16rem] text-[13px] leading-6 text-[rgba(217,228,239,0.76)] break-keep [word-break:keep-all]">
-          {summarizeText(question.description || "설명이 비어 있는 질문이다.", 54)}
+          {summarizeText(question.description || "설명이 비어 있는 물음이다.", 54)}
         </p>
         <div
           className={cn(

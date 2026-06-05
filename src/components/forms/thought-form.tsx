@@ -38,7 +38,7 @@ export function ThoughtForm({
         ) : null}
 
         <div>
-          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Thought</p>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">사유</p>
           <h3 className={`display-font mt-2 font-semibold text-white ${compact ? "text-xl" : "text-2xl"}`}>
             {title}
           </h3>
@@ -54,7 +54,7 @@ export function ThoughtForm({
             required
             defaultValue={initialContent ?? ""}
             className="pond-textarea text-sm leading-7"
-            placeholder="생각의 조각을 그대로 남겨도 된다."
+            placeholder="생각의 조각을 그대로 적어도 된다."
           />
         </fieldset>
 
@@ -66,7 +66,7 @@ export function ThoughtForm({
 
         <SubmitButton
           className="pond-button rounded-full px-4 py-2.5 text-[11px] font-medium"
-          pendingLabel="저장 중..."
+          pendingLabel="적는 중..."
           disabled={disabled}
         >
           {submitLabel}

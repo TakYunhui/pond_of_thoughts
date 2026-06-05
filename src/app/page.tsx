@@ -2,33 +2,29 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FloatingQuestionNode } from "@/components/floating-question-node";
 import { PondBackdrop } from "@/components/pond-backdrop";
-import { getCurrentViewer, getQuestions, isDemoMode } from "@/lib/data";
+import { getCurrentViewer, getQuestions } from "@/lib/data";
 
 const desktopNodes = [
   {
-    className: "left-[10%] top-[37%] float-drift",
+    className: "left-[6%] top-[50%] float-drift pond-emerge",
     textSide: "right" as const,
   },
   {
-    className: "right-[16%] top-[44%] float-drift [animation-delay:1.8s]",
+    className: "right-[10%] top-[58%] float-drift pond-emerge [animation-delay:1.8s]",
     textSide: "left" as const,
   },
   {
-    className: "left-[20%] top-[68%] float-drift [animation-delay:3.6s]",
+    className: "left-[16%] top-[82%] float-drift pond-emerge [animation-delay:3.6s]",
     textSide: "right" as const,
   },
 ] as const;
 
 export default async function Home() {
-  const [viewer, questions, demoMode] = await Promise.all([
-    getCurrentViewer(),
-    getQuestions(4),
-    isDemoMode(),
-  ]);
+  const [viewer, questions] = await Promise.all([getCurrentViewer(), getQuestions(4)]);
 
   return (
     <main className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pb-16 pt-6 sm:px-8 lg:px-10">
-      <section className="relative overflow-hidden rounded-[2.75rem] px-2 pb-12 sm:px-4 lg:min-h-[62rem]">
+      <section className="pond-landing relative px-2 pb-10 sm:px-4 lg:min-h-[58rem]">
         <PondBackdrop />
 
         <div className="absolute inset-0 z-0 hidden lg:block">
@@ -44,7 +40,7 @@ export default async function Home() {
           ))}
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 pt-14 text-center sm:px-6 sm:pt-20">
+        <div className="pond-hero-copy relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 pt-14 text-center sm:px-6 sm:pt-20">
           <span className="mb-6 text-[10px] uppercase tracking-[0.34em] text-[var(--muted)]">
             고요한 질문 보관소
           </span>
@@ -88,25 +84,6 @@ export default async function Home() {
               delayMs={index * 90}
             />
           ))}
-        </div>
-
-        <div className="relative z-10 mt-8 grid gap-6 px-4 py-8 sm:grid-cols-3 sm:px-6 lg:mt-[26rem]">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">상태</p>
-            <p className="mt-2 text-sm text-[var(--foreground)]">
-              {demoMode ? "목업 데이터 기반 미리보기" : "실제 Supabase 연결 상태"}
-            </p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">사용자</p>
-            <p className="mt-2 text-sm text-[var(--foreground)]">
-              {viewer ? `${viewer.nickname}로 들어와 있음` : "아직 로그인 전 상태"}
-            </p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">구조</p>
-            <p className="mt-2 text-sm text-[var(--foreground)]">질문 → 사유 → 파생 사유</p>
-          </div>
         </div>
       </section>
     </main>

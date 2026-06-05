@@ -236,22 +236,22 @@ select {
 
 .pond-point {
   box-shadow:
-    0 0 0 7px rgba(244, 195, 119, 0.05),
-    0 0 22px rgba(244, 195, 119, 0.22);
+    0 0 0 8px rgba(244, 195, 119, 0.08),
+    0 0 24px rgba(244, 195, 119, 0.32);
 }
 
 .pond-ripple-burst {
   opacity: 0;
-  box-shadow: 0 0 0 1px rgba(217, 228, 239, 0.16);
+  box-shadow: 0 0 0 1px rgba(217, 228, 239, 0.26);
   transform: translate(-50%, -50%) scale(0.28);
 }
 
 .pond-ripple-burst-delay-1 {
-  box-shadow: 0 0 0 1px rgba(210, 196, 179, 0.12);
+  box-shadow: 0 0 0 1px rgba(210, 196, 179, 0.22);
 }
 
 .pond-ripple-burst-delay-2 {
-  box-shadow: 0 0 0 1px rgba(244, 195, 119, 0.08);
+  box-shadow: 0 0 0 1px rgba(244, 195, 119, 0.18);
 }
 
 .pond-type-art {
@@ -337,16 +337,33 @@ select {
     transform: translate(-50%, -50%) scale(0.28);
   }
   18% {
-    opacity: 0.56;
+    opacity: 0.8;
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(2.7);
+    transform: translate(-50%, -50%) scale(2.95);
+  }
+}
+
+@keyframes question-emerge {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .float-drift {
   animation: pond-float 13s ease-in-out infinite;
+}
+
+.pond-emerge.float-drift {
+  animation:
+    question-emerge 1.2s ease-out forwards,
+    pond-float 13s ease-in-out 1.2s infinite;
 }
 
 .ripple-pulse {
@@ -385,6 +402,7 @@ select {
   }
 
   .float-drift,
+  .pond-emerge.float-drift,
   .ripple-pulse,
   .pond-ripple-burst,
   .pond-node::before,

@@ -64,17 +64,17 @@ export function FloatingQuestionNode({
 
       <div
         className={cn(
-          "pond-type-art pointer-events-none absolute top-1/2 w-[20rem] -translate-y-1/2",
+          "pond-type-art pointer-events-none absolute top-1/2 w-[19rem] -translate-y-1/2 break-keep [word-break:keep-all]",
           textSide === "left" ? "right-8 text-right" : "left-8 text-left",
         )}
       >
         <span className="text-[10px] uppercase tracking-[0.26em] text-[rgba(217,228,239,0.44)]">
           질문
         </span>
-        <p className="display-font mt-2 text-[2.35rem] leading-[0.98] tracking-[-0.05em] text-[#d8cab7] [text-wrap:balance]">
+        <p className="display-font mt-2 max-w-[15rem] text-[2.18rem] leading-[1.04] tracking-[-0.06em] text-[#dccfbe] break-keep [word-break:keep-all]">
           {question.title}
         </p>
-        <p className="mt-3 max-w-[18rem] text-[13px] leading-6 text-[rgba(217,228,239,0.72)]">
+        <p className="mt-3 max-w-[16rem] text-[13px] leading-6 text-[rgba(217,228,239,0.76)] break-keep [word-break:keep-all]">
           {summarizeText(question.description || "설명이 비어 있는 질문이다.", 54)}
         </p>
         <div

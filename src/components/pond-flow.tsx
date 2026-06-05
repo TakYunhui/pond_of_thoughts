@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Background,
-  Controls,
-  ReactFlow,
-  type Edge,
-  type Node,
-} from "@xyflow/react";
+import { Controls, ReactFlow, type Edge, type Node } from "@xyflow/react";
 import { MotionConfig, motion } from "framer-motion";
 import { type Question, type Thought } from "@/lib/types";
 import { cn, formatDate, summarizeText } from "@/lib/utils";
@@ -17,16 +11,18 @@ type PondFlowProps = {
   thoughts: Thought[];
 };
 
-const LEVEL_X = 320;
-const LEVEL_Y = 180;
+const LEVEL_X = 460;
+const LEVEL_Y = 280;
 
 function FlowQuestionNode({ question }: { question: Question }) {
   return (
-    <div className="pond-node w-[18.75rem] rounded-[2rem] px-5 py-5 text-left shadow-[0_0_28px_rgba(194,204,216,0.08)]" data-active="true">
+    <div className="pond-node relative w-[19rem] rounded-[2.2rem] px-6 py-6 text-left shadow-[0_0_28px_rgba(194,204,216,0.06)]" data-active="true">
       <div className="pond-ripple absolute left-5 top-5 h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(244,195,119,0.5)]" />
       <div className="pt-10">
-        <p className="text-[10px] uppercase tracking-[0.26em] text-[var(--muted)]">Question</p>
-        <p className="display-font mt-3 text-[1.65rem] leading-tight text-[#d2c4b3]">{question.title}</p>
+        <p className="text-[10px] uppercase tracking-[0.26em] text-[var(--muted)]">질문</p>
+        <p className="display-font mt-3 text-[1.7rem] leading-tight text-[#d2c4b3]">
+          {question.title}
+        </p>
         <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
           {summarizeText(question.description || "설명이 비어 있는 질문이다.", 88)}
         </p>
@@ -45,8 +41,8 @@ function FlowThoughtNode({
   return (
     <div
       className={cn(
-        "pond-node w-[16.5rem] rounded-[1.7rem] px-4 py-4 text-left",
-        selected && "shadow-[0_0_36px_rgba(244,195,119,0.14)]",
+        "pond-node relative w-[17.5rem] rounded-[2rem] px-5 py-5 text-left",
+        selected && "shadow-[0_0_32px_rgba(244,195,119,0.14)]",
       )}
       data-active={selected ? "true" : "false"}
     >
@@ -58,11 +54,11 @@ function FlowThoughtNode({
           {formatDate(thought.createdAt)}
         </p>
       </div>
-      <p className="display-font text-[1.18rem] leading-snug text-[var(--foreground)]">
+      <p className="display-font text-[1.22rem] leading-snug text-[var(--foreground)]">
         {thought.isDeleted ? "삭제된 사유입니다." : summarizeText(thought.content, 76)}
       </p>
-      <div className="mt-4 border-t border-white/[0.06] pt-3 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
-        {thought.parentThoughtId ? "파생 사유" : "1차 사유"}
+      <div className="mt-4 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+        {thought.parentThoughtId ? "파생 사유" : "첫 사유"}
       </div>
     </div>
   );
@@ -76,7 +72,7 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
   const nodes: Node[] = [
     {
       id: `question:${question.id}`,
-      position: { x: 80, y: Math.max(40, thoughts.length * 26) },
+      position: { x: 80, y: Math.max(80, thoughts.length * 34) },
       data: {
         label: <FlowQuestionNode question={question} />,
       },
@@ -85,7 +81,7 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
       style: {
         background: "transparent",
         border: "none",
-        width: 290,
+        width: 304,
       },
     },
   ];
@@ -108,10 +104,10 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
     const items = groups.get(parentId) ?? [];
     let cursor = startY;
 
-    for (const [index, thought] of items.entries()) {
-      const childCount = (groups.get(thought.id) ?? []).length;
-      const branchHeight = Math.max(1, childCount) * LEVEL_Y;
-      const y = cursor + index * 12;
+    for (const thought of items) {
+      const descendants = groups.get(thought.id) ?? [];
+      const branchHeight = Math.max(1, descendants.length + 1) * LEVEL_Y;
+      const y = cursor;
 
       nodes.push({
         id: thought.id,
@@ -123,7 +119,7 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
         style: {
           background: "transparent",
           border: "none",
-          width: 260,
+          width: 288,
         },
       });
 
@@ -133,37 +129,39 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
         target: thought.id,
         type: "smoothstep",
         style: {
-          stroke: selectedThoughtId === thought.id ? "#ffcb79" : "rgba(237,243,249,0.2)",
-          strokeWidth: selectedThoughtId === thought.id ? 1.6 : 1,
+          stroke: selectedThoughtId === thought.id ? "rgba(244,195,119,0.78)" : "rgba(217,228,239,0.16)",
+          strokeWidth: selectedThoughtId === thought.id ? 1.8 : 1,
         },
       });
 
-      cursor = placeThoughts(thought.id, depth + 1, y) + branchHeight / 2;
+      cursor = placeThoughts(thought.id, depth + 1, y + LEVEL_Y) + branchHeight / 2;
     }
 
     return Math.max(startY + LEVEL_Y, cursor + LEVEL_Y);
   };
 
-  placeThoughts(null, 1, 60);
+  placeThoughts(null, 1, 80);
 
   const selectedThought = thoughts.find((thought) => thought.id === selectedThoughtId) ?? null;
   const selectedChildren = selectedThought ? groups.get(selectedThought.id) ?? [] : [];
 
   return (
     <MotionConfig transition={{ duration: 0.42, ease: "easeOut" }}>
-      <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="glass-card pond-ring relative h-[620px] overflow-hidden rounded-[2.2rem] border border-white/10">
+      <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="glass-card pond-ring relative h-[820px] overflow-hidden rounded-[2.4rem]">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(217,228,239,0.12),_transparent_62%)] blur-[80px]" />
-            <div className="absolute left-[12%] top-[18%] h-72 w-72 rounded-full border border-[rgba(194,204,216,0.08)]" />
-            <div className="absolute right-[10%] bottom-[14%] h-80 w-80 rounded-full border border-[rgba(244,195,119,0.08)]" />
+            <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(217,228,239,0.12),_transparent_62%)] blur-[90px]" />
+            <div className="absolute left-[14%] top-[22%] h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(194,204,216,0.08),_transparent_72%)]" />
+            <div className="absolute right-[10%] bottom-[8%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(244,195,119,0.07),_transparent_72%)]" />
+            <div className="absolute left-[18%] top-[30%] h-44 w-44 rounded-full shadow-[0_0_0_1px_rgba(194,204,216,0.08)]" />
+            <div className="absolute right-[18%] top-[48%] h-52 w-52 rounded-full shadow-[0_0_0_1px_rgba(244,195,119,0.06)]" />
           </div>
           <ReactFlow
             nodes={nodes}
             edges={edges}
             fitView
-            minZoom={0.4}
-            maxZoom={1.5}
+            minZoom={0.35}
+            maxZoom={1.35}
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable
@@ -175,10 +173,9 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
               setSelectedThoughtId(node.id);
             }}
           >
-            <Background color="rgba(217,228,239,0.06)" gap={34} />
             <Controls
               position="bottom-left"
-              className="!rounded-2xl !border !border-white/10 !bg-[rgba(6,12,20,0.75)] !text-white [&_button]:!border-white/10 [&_button]:!bg-transparent [&_button:hover]:!bg-white/5"
+              className="!rounded-2xl !bg-[rgba(6,12,20,0.45)] !text-white [&_button]:!border-0 [&_button]:!bg-transparent [&_button:hover]:!bg-white/5"
             />
           </ReactFlow>
         </div>
@@ -187,9 +184,9 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
           key={selectedThoughtId ?? "empty"}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card rounded-[2.2rem] p-6"
+          className="glass-card rounded-[2.3rem] p-6"
         >
-          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">Selected Thought</p>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--muted)]">선택된 사유</p>
           {selectedThought ? (
             <div className="mt-4 space-y-4">
               <div>
@@ -201,24 +198,24 @@ export function PondFlow({ question, thoughts }: PondFlowProps) {
               <p className="text-sm leading-7 text-[var(--foreground)]">
                 {selectedThought.isDeleted ? "삭제된 사유입니다." : selectedThought.content}
               </p>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="pond-note rounded-[1.6rem] p-4">
+              <div className="grid gap-3">
+                <div className="pond-note rounded-[1.8rem] p-4">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">파생 수</p>
                   <p className="mt-2 text-white">{selectedChildren.length}</p>
                 </div>
-                <div className="pond-note rounded-[1.6rem] p-4">
+                <div className="pond-note rounded-[1.8rem] p-4">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">상태</p>
                   <p className="mt-2 text-white">
-                    {selectedThought.parentThoughtId ? "파생 사유" : "1차 사유"}
+                    {selectedThought.parentThoughtId ? "파생 사유" : "첫 사유"}
                   </p>
                 </div>
               </div>
-              <p className="pond-note rounded-[1.6rem] px-4 py-3 text-sm leading-7 text-[var(--muted)]">
+              <p className="pond-note rounded-[1.8rem] px-4 py-3 text-sm leading-7 text-[var(--muted)]">
                 실제 작성과 수정은 아래 읽기형 트리 영역에서 이어서 할 수 있다.
               </p>
             </div>
           ) : (
-            <p className="mt-4 rounded-[1.6rem] border border-dashed border-white/10 px-4 py-5 text-sm leading-7 text-[var(--muted)]">
+            <p className="mt-4 rounded-[1.8rem] px-4 py-5 text-sm leading-7 text-[var(--muted)]">
               노드를 누르면 사유 상세가 여기 열린다.
             </p>
           )}

@@ -59,18 +59,15 @@ select {
 }
 
 .glass-card {
-  border: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(19, 29, 37, 0.7), rgba(10, 20, 29, 0.46));
   backdrop-filter: blur(26px);
   box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(217, 228, 239, 0.04);
+    0 24px 80px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(217, 228, 239, 0.03);
 }
 
 .pond-ring {
-  box-shadow:
-    0 0 0 1px rgba(217, 228, 239, 0.06),
-    0 0 44px rgba(194, 204, 216, 0.08);
+  box-shadow: 0 0 44px rgba(194, 204, 216, 0.08);
 }
 
 .text-muted {
@@ -91,20 +88,24 @@ select {
 }
 
 .pond-button {
-  border: 1px solid rgba(210, 196, 179, 0.22);
-  background: rgba(10, 20, 29, 0.28);
+  border: 0;
+  background:
+    radial-gradient(circle at top, rgba(217, 228, 239, 0.05), transparent 52%),
+    rgba(10, 20, 29, 0.32);
   color: var(--foreground);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  box-shadow: inset 0 0 0 1px rgba(217, 228, 239, 0.02);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(217, 228, 239, 0.03);
 }
 
 .pond-button:hover {
-  border-color: rgba(244, 195, 119, 0.36);
   color: var(--accent);
   box-shadow:
     0 0 24px rgba(244, 195, 119, 0.08),
-    inset 0 0 0 1px rgba(244, 195, 119, 0.08);
+    0 14px 32px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(244, 195, 119, 0.08);
 }
 
 .pond-button:disabled {
@@ -114,33 +115,32 @@ select {
 }
 
 .pond-node {
-  position: relative;
-  border: 1px solid rgba(210, 196, 179, 0.12);
   background:
-    radial-gradient(circle at top, rgba(217, 228, 239, 0.06), transparent 40%),
-    rgba(10, 20, 29, 0.46);
-  backdrop-filter: blur(14px);
+    radial-gradient(circle at top, rgba(217, 228, 239, 0.08), transparent 42%),
+    rgba(10, 20, 29, 0.34);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(217, 228, 239, 0.02);
 }
 
 .pond-node::before,
 .pond-node::after {
   content: "";
   position: absolute;
-  inset: -14px;
+  inset: -10px;
   border-radius: inherit;
-  border: 1px solid rgba(194, 204, 216, 0.08);
   opacity: 0;
   transform: scale(0.94);
   transition:
     transform 420ms ease,
     opacity 420ms ease,
-    border-color 420ms ease;
+    box-shadow 420ms ease;
   pointer-events: none;
 }
 
 .pond-node::after {
-  inset: -28px;
-  border-color: rgba(244, 195, 119, 0.06);
+  inset: -22px;
   transition-duration: 560ms;
 }
 
@@ -152,11 +152,21 @@ select {
   transform: scale(1);
 }
 
+.pond-node:hover::before,
+.pond-node[data-active="true"]::before {
+  box-shadow: 0 0 0 1px rgba(194, 204, 216, 0.08);
+}
+
+.pond-node:hover::after,
+.pond-node[data-active="true"]::after {
+  box-shadow: 0 0 0 1px rgba(244, 195, 119, 0.05);
+}
+
 .pond-node:hover {
-  border-color: rgba(244, 195, 119, 0.18);
   box-shadow:
     0 0 36px rgba(194, 204, 216, 0.08),
-    0 0 18px rgba(244, 195, 119, 0.08);
+    0 0 18px rgba(244, 195, 119, 0.08),
+    0 14px 40px rgba(0, 0, 0, 0.2);
 }
 
 .pond-ripple::before,
@@ -164,7 +174,7 @@ select {
   content: "";
   position: absolute;
   border-radius: 9999px;
-  border: 1px solid rgba(194, 204, 216, 0.12);
+  box-shadow: 0 0 0 1px rgba(194, 204, 216, 0.1);
   pointer-events: none;
 }
 
@@ -174,7 +184,7 @@ select {
 
 .pond-ripple::after {
   inset: -46px;
-  border-color: rgba(244, 195, 119, 0.08);
+  box-shadow: 0 0 0 1px rgba(244, 195, 119, 0.06);
 }
 
 .pond-field {
@@ -217,8 +227,40 @@ select {
 }
 
 .pond-note {
-  border: 1px solid rgba(210, 196, 179, 0.1);
   background: rgba(10, 20, 29, 0.18);
+}
+
+.text-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(6px);
+  transition:
+    opacity 360ms ease,
+    transform 420ms ease,
+    filter 420ms ease;
+}
+
+.group:hover .text-rise,
+.group:focus-visible .text-rise,
+.group[data-active="true"] .text-rise {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.hide-on-rest {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 320ms ease,
+    transform 420ms ease;
+}
+
+.group:hover .hide-on-rest,
+.group:focus-visible .hide-on-rest,
+.group[data-active="true"] .hide-on-rest {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @keyframes pond-float {

@@ -33,13 +33,13 @@ export function TopNav({ viewer, demoMode }: TopNavProps) {
 
         <div className="flex items-center gap-3">
           {demoMode ? (
-            <span className="rounded-full border border-[var(--accent-soft)] px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+            <span className="rounded-full bg-[rgba(244,195,119,0.08)] px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
               demo
             </span>
           ) : null}
           {viewer ? (
             <>
-              <span className="hidden rounded-full border border-white/10 px-3 py-1 text-xs tracking-[0.14em] text-[var(--muted)] sm:inline-flex">
+              <span className="hidden rounded-full bg-white/[0.04] px-3 py-1 text-xs tracking-[0.14em] text-[var(--muted)] sm:inline-flex">
                 {viewer.nickname}
               </span>
               <form action={signOutAction}>

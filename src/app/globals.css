@@ -38,6 +38,16 @@ body {
     radial-gradient(circle at top, rgba(194, 204, 216, 0.1), transparent 34%),
     radial-gradient(circle at 82% 88%, rgba(239, 191, 115, 0.08), transparent 16%),
     linear-gradient(180deg, #07111a 0%, #040b12 100%);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: loose;
+  text-wrap: pretty;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption, summary, label, a, button) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: loose;
 }
 
 a,
@@ -77,6 +87,10 @@ select {
 .display-font {
   font-family: var(--font-display), serif;
   letter-spacing: -0.02em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: loose;
+  text-wrap: balance;
 }
 
 .ambient-grid {
